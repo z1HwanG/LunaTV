@@ -48,3 +48,5 @@ export async function GET(request: NextRequest) {
       { error: (error as Error).message },
       { status: 500 }
     );
+  }
+}

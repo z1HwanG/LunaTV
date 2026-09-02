@@ -47,3 +47,16 @@ export async function POST(request: NextRequest) {
 
     // 修改密码
     await db.changePassword(username, newPassword);
+
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    console.error('修改密码失败:', error);
+    return NextResponse.json(
+      {
+        error: '修改密码失败',
+        details: (error as Error).message,
+      },
+      { status: 500 }
+    );
+  }
+}
