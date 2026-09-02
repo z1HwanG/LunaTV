@@ -47,3 +47,16 @@ export async function GET(request: Request) {
     headers.set('CDN-Cache-Control', 'public, s-maxage=15720000');
     headers.set('Vercel-CDN-Cache-Control', 'public, s-maxage=15720000');
     headers.set('Netlify-Vary', 'query');
+
+    // 直接返回图片流
+    return new Response(imageResponse.body, {
+      status: 200,
+      headers,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Error fetching image' },
+      { status: 500 }
+    );
+  }
+}
