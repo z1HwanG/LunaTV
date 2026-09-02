@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { getAuthInfoFromCookie } from '@/lib/auth';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 export async function POST(request: NextRequest) {
   try {
@@ -48,19 +48,3 @@ export async function POST(request: NextRequest) {
     } catch (decodeError) {
       console.warn('Base58 解码失败', decodeError);
       throw decodeError;
-    }
-
-    return NextResponse.json({
-      success: true,
-      configContent: decodedContent,
-      message: '配置拉取成功'
-    });
-
-  } catch (error) {
-    console.error('拉取配置失败:', error);
-    return NextResponse.json(
-      { error: '拉取配置失败' },
-      { status: 500 }
-    );
-  }
-}
