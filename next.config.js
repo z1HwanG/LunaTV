@@ -62,15 +62,14 @@ const nextConfig = {
       net: false,
       tls: false,
       crypto: false,
-      zlib: false,
-      util: false,
-      stream: false,
-      path: false,
-      fs: false,
-      os: false,
-      http: false,
-      https: false,
     };
+
+    // 将 Node.js 内置模块标记为外部模块，Edge Runtime 通过 nodejs_compat 提供
+    if (Array.isArray(config.externals)) {
+      config.externals.push('zlib', 'util', 'stream', 'path', 'fs', 'os', 'http', 'https');
+    } else {
+      config.externals = [config.externals, 'zlib', 'util', 'stream', 'path', 'fs', 'os', 'http', 'https'].filter(Boolean);
+    }
 
     return config;
   },
