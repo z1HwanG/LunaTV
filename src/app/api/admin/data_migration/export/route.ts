@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,no-console */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { promisify } from 'util';
-import { gzip } from 'zlib';
 
 import { getAuthInfoFromCookie } from '@/lib/auth';
 import { SimpleCrypto } from '@/lib/crypto';
@@ -10,8 +8,6 @@ import { db } from '@/lib/db';
 import { CURRENT_VERSION } from '@/lib/version';
 
 export const runtime = 'edge';
-
-const gzipAsync = promisify(gzip);
 
 export async function POST(req: NextRequest) {
   try {
@@ -85,14 +81,12 @@ export async function POST(req: NextRequest) {
     // 覆盖站长密码
     exportData.data.userData[process.env.USERNAME].password = process.env.PASSWORD;
 
-    // 将数据转换为JSON字符串
+    // 将数据转换为JSON字符串并直接加密（Edge Runtime 不支持 zlib 压缩）
     const jsonData = JSON.stringify(exportData);
-
-    // 先压缩数据
-    const compressedData = await gzipAsync(jsonData);
-
-    // 使用提供的密码加密压缩后的数据
-    const encryptedData = SimpleCrypto.encrypt(compressedData.toString('base64'), password);
+    const encryptedData = SimpleCrypto.encrypt(
+      btoa(jsonData),
+      password
+    );
 
     // 生成文件名
     const now = new Date();

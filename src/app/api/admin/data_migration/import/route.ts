@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,no-console */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { promisify } from 'util';
-import { gunzip } from 'zlib';
 
 import { getAuthInfoFromCookie } from '@/lib/auth';
 import { configSelfCheck, setCachedConfig } from '@/lib/config';
@@ -10,8 +8,6 @@ import { SimpleCrypto } from '@/lib/crypto';
 import { db } from '@/lib/db';
 
 export const runtime = 'edge';
-
-const gunzipAsync = promisify(gunzip);
 
 export async function POST(req: NextRequest) {
   try {
@@ -59,10 +55,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: '解密失败，请检查密码是否正确' }, { status: 400 });
     }
 
-    // 解压缩数据
-    const compressedBuffer = Buffer.from(decryptedData, 'base64');
-    const decompressedBuffer = await gunzipAsync(compressedBuffer);
-    const decompressedData = decompressedBuffer.toString();
+    // 解码数据（Edge Runtime 不支持 zlib 解压缩）
+    const decompressedData = atob(decryptedData);
 
     // 解析JSON数据
     let importData: any;
