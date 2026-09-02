@@ -48,3 +48,10 @@ export async function POST(request: NextRequest) {
       message: '直播源刷新成功',
     });
   } catch (error) {
+    console.error('直播源刷新失败:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : '刷新失败' },
+      { status: 500 }
+    );
+  }
+}

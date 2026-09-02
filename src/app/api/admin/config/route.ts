@@ -48,3 +48,16 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(result, {
       headers: {
         'Cache-Control': 'no-store', // 管理员配置不缓存
+      },
+    });
+  } catch (error) {
+    console.error('获取管理员配置失败:', error);
+    return NextResponse.json(
+      {
+        error: '获取管理员配置失败',
+        details: (error as Error).message,
+      },
+      { status: 500 }
+    );
+  }
+}
