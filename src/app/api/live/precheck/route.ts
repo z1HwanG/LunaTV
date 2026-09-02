@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { getConfig } from '@/lib/config';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -48,7 +48,3 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: true, type: 'flv' }, { status: 200 });
     }
     return NextResponse.json({ success: true, type: 'm3u8' }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch', message: error }, { status: 500 });
-  }
-}

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { getCachedLiveChannels } from '@/lib/live';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 export async function GET(request: NextRequest) {
   try {
@@ -48,7 +48,3 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       { error: '获取节目单信息失败' },
-      { status: 500 }
-    );
-  }
-}
