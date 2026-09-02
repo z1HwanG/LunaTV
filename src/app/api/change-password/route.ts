@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAuthInfoFromCookie } from '@/lib/auth';
 import { db } from '@/lib/db';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 export async function POST(request: NextRequest) {
   const storageType = process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage';
@@ -47,16 +47,3 @@ export async function POST(request: NextRequest) {
 
     // 修改密码
     await db.changePassword(username, newPassword);
-
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error('修改密码失败:', error);
-    return NextResponse.json(
-      {
-        error: '修改密码失败',
-        details: (error as Error).message,
-      },
-      { status: 500 }
-    );
-  }
-}
