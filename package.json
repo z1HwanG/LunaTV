@@ -18,7 +18,7 @@
     "postbuild": "echo 'Build completed - sitemap generation disabled'",
     "prepare": "husky install",
     "pages:build": "npx @cloudflare/next-on-pages",
-    "pages:deploy": "npx wrangler pages deploy .vercel/output/static --project-name=moontv",
+    "pages:deploy": "npx wrangler pages deploy .vercel/output/static --project-name=lunatv",
     "pages:preview": "npx wrangler pages dev .vercel/output/static --compatibility-date=2025-01-01"
   },
   "dependencies": {

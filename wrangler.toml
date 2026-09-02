@@ -3,7 +3,7 @@
 # 1. pnpm install && pnpm build && pnpm pages:build
 # 2. pnpm pages:deploy
 
-name = "moontv"
+name = "lunatv"
 compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
 
