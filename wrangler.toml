@@ -1,0 +1,11 @@
+# Cloudflare Pages 配置 - 用于部署 MoonTV (LunaTV)
+# 使用方式：
+# 1. pnpm install && pnpm build && pnpm pages:build
+# 2. pnpm pages:deploy
+
+name = "moontv"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Pages 构建输出目录（由 @cloudflare/next-on-pages 生成）
+pages_build_output_dir = ".vercel/output/static"
